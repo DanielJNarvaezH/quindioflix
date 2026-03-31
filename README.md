@@ -64,6 +64,52 @@ corrección que será algo así como una versión nueva.
 | V8__nucleo4_indices.sql | Índices y EXPLAIN PLAN |
 | V9__nucleo5_roles.sql | Usuarios, roles y privilegios |
 
+### Configuracion de ruta base para datafiles (MOD-2)
+
+El script `V1__tablespaces.sql` usa el placeholder `${ruta_base}` para la
+ubicacion de los datafiles Oracle. Flyway reemplaza este valor en tiempo de
+ejecucion con lo configurado en `application.properties`.
+
+**Antes de correr el proyecto por primera vez**, edita esta linea en
+`quindioflix-bd2/src/main/resources/application.properties`:
+
+```properties
+spring.flyway.placeholders.ruta_base=C:/oracle/oradata/XEPDB1
+```
+
+| Sistema operativo | Ruta tipica |
+|---|---|
+| Windows | `C:/oracle/oradata/XEPDB1` |
+| Linux | `/opt/oracle/oradata/XE/XEPDB1` |
+| Mac | `/Users/tuusuario/oracle/oradata/XEPDB1` |
+
+El directorio debe existir y el usuario `oracle` del sistema debe tener
+permisos de escritura sobre el. Si no sabes la ruta, ejecuta en SQL*Plus:
+
+```sql
+SHOW PARAMETER db_create_file_dest;
+-- o bien:
+SELECT name FROM v$datafile WHERE rownum = 1;
+```
+
+**Para verificar que V1 se ejecuto correctamente**, conectate como SYSTEM a
+XEPDB1 y ejecuta:
+
+```sql
+SELECT tablespace_name, status, contents
+FROM dba_tablespaces
+WHERE tablespace_name IN (
+  'TS_QUINDIOFLIX_DATOS',
+  'TS_QUINDIOFLIX_INDICES',
+  'TS_QUINDIOFLIX_REPROD_2024',
+  'TS_QUINDIOFLIX_REPROD_2025'
+);
+```
+
+Deben aparecer los 4 tablespaces con `STATUS = ONLINE`.
+
+---
+
 ### Reglas importantes
 - ⚠️ **Nunca modificar/corregir un script que ya alguien ejecutó y subió al github** — Flyway 
   detecta el cambio por checksum y lanza error
