@@ -1,0 +1,266 @@
+@startuml QuindioFlix_MER
+' MER - QuindioFlix - Plataforma de Streaming
+' Universidad del Quindio - Bases de Datos II - 2026-1
+' Notacion: Pata de Gallo (Crow's Foot)
+
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+skinparam classFontSize 11
+skinparam classAttributeFontSize 10
+skinparam classFontName Arial
+skinparam classAttributeFontName Arial
+skinparam nodesep 70
+skinparam ranksep 80
+
+skinparam class {
+  BorderColor #1F3864
+  BackgroundColor #EEF4FB
+  HeaderBackgroundColor #1F3864
+  HeaderFontColor #FFFFFF
+  HeaderFontSize 12
+  HeaderFontStyle bold
+  ArrowColor #2E5FA3
+  ArrowThickness 1.5
+}
+
+' ============================================================
+' BLOQUE 1: PLANES Y SUSCRIPCIONES
+' ============================================================
+
+entity "PLANES" as PLANES {
+  * id_plan         : NUMBER <<PK>>
+  ==
+  * nombre          : VARCHAR2(20)
+  * precio_mensual  : NUMBER(10,2)
+  * max_pantallas   : NUMBER(1)
+  * calidad_video   : VARCHAR2(5)
+  * max_perfiles    : NUMBER(1)
+}
+
+entity "USUARIOS" as USUARIOS {
+  * id_usuario        : NUMBER <<PK>>
+  ==
+  * nombre            : VARCHAR2(100)
+  * email             : VARCHAR2(150)
+  * telefono          : VARCHAR2(20)
+  * fecha_nacimiento  : DATE
+  * ciudad_residencia : VARCHAR2(100)
+  * fecha_registro    : DATE
+  * estado_cuenta     : VARCHAR2(15)
+  * fecha_vencimiento : DATE
+  fecha_ultimo_pago   : DATE
+  * es_moderador      : CHAR(1)
+  --
+  * id_plan           : NUMBER <<FK>>
+  id_referidor        : NUMBER <<FK>>
+}
+
+entity "PERFILES" as PERFILES {
+  * id_perfil     : NUMBER <<PK>>
+  ==
+  * nombre_perfil : VARCHAR2(50)
+  * avatar        : VARCHAR2(200)
+  * tipo_perfil   : VARCHAR2(10)
+  --
+  * id_usuario    : NUMBER <<FK>>
+}
+
+entity "PAGOS" as PAGOS {
+  * id_pago           : NUMBER <<PK>>
+  ==
+  * fecha_pago        : DATE
+  * monto             : NUMBER(10,2)
+  * metodo_pago       : VARCHAR2(20)
+  * estado_pago       : VARCHAR2(15)
+  descuento_aplicado  : NUMBER(5,2)
+  --
+  * id_usuario        : NUMBER <<FK>>
+}
+
+' ============================================================
+' BLOQUE 2: CATALOGO DE CONTENIDO
+' ============================================================
+
+entity "CATEGORIAS" as CATEGORIAS {
+  * id_categoria : NUMBER <<PK>>
+  ==
+  * nombre       : VARCHAR2(50)
+  descripcion    : VARCHAR2(200)
+}
+
+entity "GENEROS" as GENEROS {
+  * id_genero : NUMBER <<PK>>
+  ==
+  * nombre    : VARCHAR2(50)
+}
+
+entity "CONTENIDO" as CONTENIDO {
+  * id_contenido            : NUMBER <<PK>>
+  ==
+  * titulo                  : VARCHAR2(200)
+  * anio_lanzamiento        : NUMBER(4)
+  * duracion_min            : NUMBER(5)
+  * sinopsis                : CLOB
+  * clasificacion_edad      : VARCHAR2(5)
+  * fecha_agregado_catalogo : DATE
+  * es_original_quindioflix : CHAR(1)
+  * popularidad             : NUMBER(7,2)
+  --
+  * id_categoria            : NUMBER <<FK>>
+  * id_empleado_publicacion : NUMBER <<FK>>
+}
+
+entity "CONTENIDO_GENEROS" as CONT_GEN {
+  * id_contenido : NUMBER <<FK>>
+  * id_genero    : NUMBER <<FK>>
+}
+
+entity "CONTENIDO_RELACIONADO" as CONT_REL {
+  * id_contenido_origen  : NUMBER <<FK>>
+  * id_contenido_destino : NUMBER <<FK>>
+  ==
+  * tipo_relacion        : VARCHAR2(30)
+  descripcion            : VARCHAR2(200)
+}
+
+entity "TEMPORADAS" as TEMPORADAS {
+  * id_temporada     : NUMBER <<PK>>
+  ==
+  * numero_temporada : NUMBER(3)
+  titulo_temporada   : VARCHAR2(200)
+  anio_estreno       : NUMBER(4)
+  --
+  * id_contenido     : NUMBER <<FK>>
+}
+
+entity "EPISODIOS" as EPISODIOS {
+  * id_episodio     : NUMBER <<PK>>
+  ==
+  * numero_episodio : NUMBER(3)
+  * titulo_episodio : VARCHAR2(200)
+  * duracion_min    : NUMBER(5)
+  --
+  * id_temporada    : NUMBER <<FK>>
+}
+
+' ============================================================
+' BLOQUE 3: CONSUMO Y ACTIVIDAD DE PERFILES
+' ============================================================
+
+entity "REPRODUCCIONES" as REPRODUCCIONES {
+  * id_reproduccion   : NUMBER <<PK>>
+  ==
+  * fecha_hora_inicio : TIMESTAMP
+  fecha_hora_fin      : TIMESTAMP
+  * dispositivo       : VARCHAR2(15)
+  * porcentaje_avance : NUMBER(5,2)
+  --
+  * id_perfil         : NUMBER <<FK>>
+  * id_contenido      : NUMBER <<FK>>
+  id_episodio         : NUMBER <<FK>>
+}
+
+entity "CALIFICACIONES" as CALIFICACIONES {
+  * id_calificacion    : NUMBER <<PK>>
+  ==
+  * estrellas          : NUMBER(1)
+  resena               : VARCHAR2(500)
+  * fecha_calificacion : DATE
+  --
+  * id_perfil          : NUMBER <<FK>>
+  * id_contenido       : NUMBER <<FK>>
+}
+
+entity "FAVORITOS" as FAVORITOS {
+  * id_favorito    : NUMBER <<PK>>
+  ==
+  * fecha_agregado : DATE
+  --
+  * id_perfil      : NUMBER <<FK>>
+  * id_contenido   : NUMBER <<FK>>
+}
+
+entity "REPORTES_INAPROPIADO" as REPORTES {
+  * id_reporte           : NUMBER <<PK>>
+  ==
+  * motivo               : VARCHAR2(300)
+  * fecha_reporte        : DATE
+  * estado_reporte       : VARCHAR2(15)
+  observacion_moderador  : VARCHAR2(300)
+  fecha_resolucion       : DATE
+  --
+  * id_perfil_reporta    : NUMBER <<FK>>
+  * id_contenido         : NUMBER <<FK>>
+  id_moderador           : NUMBER <<FK>>
+}
+
+' ============================================================
+' BLOQUE 4: EQUIPO DE TRABAJO
+' ============================================================
+
+entity "DEPARTAMENTOS" as DEPARTAMENTOS {
+  * id_departamento : NUMBER <<PK>>
+  ==
+  * nombre          : VARCHAR2(100)
+  --
+  id_jefe           : NUMBER <<FK>>
+}
+
+entity "EMPLEADOS" as EMPLEADOS {
+  * id_empleado     : NUMBER <<PK>>
+  ==
+  * nombre          : VARCHAR2(100)
+  * email           : VARCHAR2(150)
+  * cargo           : VARCHAR2(100)
+  * fecha_ingreso   : DATE
+  --
+  * id_departamento : NUMBER <<FK>>
+  id_supervisor     : NUMBER <<FK>>
+}
+
+' ============================================================
+' RELACIONES - BLOQUE SUSCRIPCIONES
+' ============================================================
+
+PLANES    ||--|{ USUARIOS      : "suscribe >"
+USUARIOS  }o--o| USUARIOS      : "< refiere a"
+USUARIOS  ||--|{ PERFILES      : "posee >"
+USUARIOS  ||--|{ PAGOS         : "realiza >"
+
+' ============================================================
+' RELACIONES - BLOQUE CATALOGO
+' ============================================================
+
+CATEGORIAS ||--|{ CONTENIDO    : "clasifica >"
+CONTENIDO  ||--|{ CONT_GEN     : "pertenece >"
+GENEROS    ||--|{ CONT_GEN     : "< categoriza"
+CONTENIDO  ||--o{ CONT_REL     : "es origen >"
+CONTENIDO  ||--o{ CONT_REL     : "< es destino"
+CONTENIDO  ||--o{ TEMPORADAS   : "organiza >"
+TEMPORADAS ||--|{ EPISODIOS    : "contiene >"
+
+' ============================================================
+' RELACIONES - BLOQUE CONSUMO
+' ============================================================
+
+PERFILES   ||--|{ REPRODUCCIONES  : "genera >"
+CONTENIDO  ||--|{ REPRODUCCIONES  : "< se reproduce en"
+EPISODIOS  ||--o{ REPRODUCCIONES  : "< reproducido en"
+PERFILES   ||--|{ CALIFICACIONES  : "califica >"
+CONTENIDO  ||--|{ CALIFICACIONES  : "< recibe"
+PERFILES   ||--|{ FAVORITOS       : "agrega >"
+CONTENIDO  ||--|{ FAVORITOS       : "< agregado en"
+PERFILES   ||--|{ REPORTES        : "reporta >"
+CONTENIDO  ||--|{ REPORTES        : "< es reportado"
+USUARIOS   ||--o{ REPORTES        : "modera >"
+
+' ============================================================
+' RELACIONES - BLOQUE EQUIPO
+' ============================================================
+
+DEPARTAMENTOS ||--|{ EMPLEADOS    : "agrupa >"
+EMPLEADOS     ||--o{ EMPLEADOS    : "supervisa >"
+EMPLEADOS     |o--o| DEPARTAMENTOS : "dirige >"
+EMPLEADOS     ||--|{ CONTENIDO    : "publica >"
+
+@enduml
