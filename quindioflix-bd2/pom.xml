@@ -5,8 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.0.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>3.3.4</version>		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.quindioflix</groupId>
 	<artifactId>quindioflix-bd2</artifactId>
@@ -32,8 +31,9 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-flyway</artifactId>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>9.22.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb</groupId>
