@@ -2,6 +2,19 @@
 ' MER - QuindioFlix - Plataforma de Streaming
 ' Universidad del Quindio - Bases de Datos II - 2026-1
 ' Notacion: Pata de Gallo (Crow's Foot)
+' Ultima revision: 2026-04-06
+' Sincronizado con V2__create_tables.sql (fuente de verdad)
+' Cambios respecto al borrador inicial:
+'   - USUARIOS: agregados apellido, contrasena_hash; quitado fecha_ultimo_pago;
+'               telefono y fecha_nacimiento ajustados como opcionales;
+'               ciudad_residencia (era ciudad en borrador)
+'   - PERFILES: nombre_perfil renombrado a nombre
+'   - PAGOS: valores de dominio explicitados (enunciado sec. 1.5)
+'   - CONTENIDO: sinopsis VARCHAR2, fecha_publicacion, estado agregados
+'   - EPISODIOS: sinopsis agregada
+'   - EMPLEADOS: apellido y salario agregados
+'   - CATEGORIAS: descripcion eliminada (no esta en DDL)
+'   - REPORTES_INAPROPIADO: observacion_moderador eliminada; estado reordenado
 
 skinparam linetype polyline
 skinparam classAttributeIconSize 0
@@ -38,43 +51,47 @@ entity "PLANES" as PLANES {
 }
 
 entity "USUARIOS" as USUARIOS {
-  * id_usuario        : NUMBER <<PK>>
+  * id_usuario        : NUMBER(8) <<PK>>
   ==
-  * nombre            : VARCHAR2(100)
-  * email             : VARCHAR2(150)
-  * telefono          : VARCHAR2(20)
-  * fecha_nacimiento  : DATE
-  * ciudad_residencia : VARCHAR2(100)
+  * nombre            : VARCHAR2(80)
+  * apellido          : VARCHAR2(80)
+  * email             : VARCHAR2(120)
+  * contrasena_hash   : VARCHAR2(256)
+  telefono            : VARCHAR2(20)
+  fecha_nacimiento    : DATE
   * fecha_registro    : DATE
-  * estado_cuenta     : VARCHAR2(15)
   * fecha_vencimiento : DATE
-  fecha_ultimo_pago   : DATE
+  * estado_cuenta     : VARCHAR2(10)
   * es_moderador      : CHAR(1)
+  ciudad_residencia   : VARCHAR2(80)
   --
-  * id_plan           : NUMBER <<FK>>
-  id_referidor        : NUMBER <<FK>>
+  * id_plan           : NUMBER(3) <<FK>>
+  id_referidor        : NUMBER(8) <<FK>>
 }
 
 entity "PERFILES" as PERFILES {
-  * id_perfil     : NUMBER <<PK>>
+  * id_perfil   : NUMBER(8) <<PK>>
   ==
-  * nombre_perfil : VARCHAR2(50)
-  * avatar        : VARCHAR2(200)
-  * tipo_perfil   : VARCHAR2(10)
+  * nombre      : VARCHAR2(60)
+  * tipo_perfil : VARCHAR2(10)
+  avatar        : VARCHAR2(200)
   --
-  * id_usuario    : NUMBER <<FK>>
+  * id_usuario  : NUMBER(8) <<FK>>
 }
 
 entity "PAGOS" as PAGOS {
-  * id_pago           : NUMBER <<PK>>
+  * id_pago              : NUMBER(10) <<PK>>
   ==
-  * fecha_pago        : DATE
-  * monto             : NUMBER(10,2)
-  * metodo_pago       : VARCHAR2(20)
-  * estado_pago       : VARCHAR2(15)
-  descuento_aplicado  : NUMBER(5,2)
+  * fecha_pago           : DATE
+  * monto                : NUMBER(10,2)
+  * metodo_pago          : VARCHAR2(20)
+  .. TARJETA_CREDITO | TARJETA_DEBITO ..
+  .. PSE | EFECTIVO | NEQUI | DAVIPLATA ..
+  * estado_pago          : VARCHAR2(15)
+  .. PENDIENTE | EXITOSO | FALLIDO | REEMBOLSADO ..
+  descuento_aplicado     : NUMBER(5,2)
   --
-  * id_usuario        : NUMBER <<FK>>
+  * id_usuario           : NUMBER(8) <<FK>>
 }
 
 ' ============================================================
@@ -82,10 +99,9 @@ entity "PAGOS" as PAGOS {
 ' ============================================================
 
 entity "CATEGORIAS" as CATEGORIAS {
-  * id_categoria : NUMBER <<PK>>
+  * id_categoria : NUMBER(3) <<PK>>
   ==
   * nombre       : VARCHAR2(50)
-  descripcion    : VARCHAR2(200)
 }
 
 entity "GENEROS" as GENEROS {
@@ -95,19 +111,22 @@ entity "GENEROS" as GENEROS {
 }
 
 entity "CONTENIDO" as CONTENIDO {
-  * id_contenido            : NUMBER <<PK>>
+  * id_contenido              : NUMBER(8) <<PK>>
   ==
-  * titulo                  : VARCHAR2(200)
-  * anio_lanzamiento        : NUMBER(4)
-  * duracion_min            : NUMBER(5)
-  * sinopsis                : CLOB
-  * clasificacion_edad      : VARCHAR2(5)
-  * fecha_agregado_catalogo : DATE
-  * es_original_quindioflix : CHAR(1)
-  * popularidad             : NUMBER(7,2)
+  * titulo                    : VARCHAR2(200)
+  sinopsis                    : VARCHAR2(2000)
+  * anio_lanzamiento          : NUMBER(4)
+  duracion_min                : NUMBER(5)
+  * clasificacion_edad        : VARCHAR2(5)
+  .. TP | +7 | +13 | +16 | +18 ..
+  * es_original_quindioflix   : CHAR(1)
+  * popularidad               : NUMBER(10,2)
+  * fecha_publicacion         : DATE
+  * estado                    : VARCHAR2(10)
+  .. ACTIVO | INACTIVO | PROXIMAMENTE ..
   --
-  * id_categoria            : NUMBER <<FK>>
-  * id_empleado_publicacion : NUMBER <<FK>>
+  * id_categoria              : NUMBER(3) <<FK>>
+  * id_empleado_publicacion   : NUMBER(6) <<FK>>
 }
 
 entity "CONTENIDO_GENEROS" as CONT_GEN {
@@ -134,13 +153,14 @@ entity "TEMPORADAS" as TEMPORADAS {
 }
 
 entity "EPISODIOS" as EPISODIOS {
-  * id_episodio     : NUMBER <<PK>>
+  * id_episodio     : NUMBER(10) <<PK>>
   ==
-  * numero_episodio : NUMBER(3)
+  * numero_episodio : NUMBER(4)
   * titulo_episodio : VARCHAR2(200)
   * duracion_min    : NUMBER(5)
+  sinopsis          : VARCHAR2(2000)
   --
-  * id_temporada    : NUMBER <<FK>>
+  * id_temporada    : NUMBER(8) <<FK>>
 }
 
 ' ============================================================
@@ -181,17 +201,17 @@ entity "FAVORITOS" as FAVORITOS {
 }
 
 entity "REPORTES_INAPROPIADO" as REPORTES {
-  * id_reporte           : NUMBER <<PK>>
+  * id_reporte        : NUMBER(10) <<PK>>
   ==
-  * motivo               : VARCHAR2(300)
-  * fecha_reporte        : DATE
-  * estado_reporte       : VARCHAR2(15)
-  observacion_moderador  : VARCHAR2(300)
-  fecha_resolucion       : DATE
+  * motivo            : VARCHAR2(500)
+  * estado_reporte    : VARCHAR2(15)
+  .. PENDIENTE | EN_REVISION | RESUELTO | DESCARTADO ..
+  * fecha_reporte     : DATE
+  fecha_resolucion    : DATE
   --
-  * id_perfil_reporta    : NUMBER <<FK>>
-  * id_contenido         : NUMBER <<FK>>
-  id_moderador           : NUMBER <<FK>>
+  * id_perfil_reporta : NUMBER(8) <<FK>>
+  * id_contenido      : NUMBER(8) <<FK>>
+  id_moderador        : NUMBER(8) <<FK>>
 }
 
 ' ============================================================
@@ -207,15 +227,17 @@ entity "DEPARTAMENTOS" as DEPARTAMENTOS {
 }
 
 entity "EMPLEADOS" as EMPLEADOS {
-  * id_empleado     : NUMBER <<PK>>
+  * id_empleado     : NUMBER(6) <<PK>>
   ==
-  * nombre          : VARCHAR2(100)
-  * email           : VARCHAR2(150)
-  * cargo           : VARCHAR2(100)
+  * nombre          : VARCHAR2(80)
+  * apellido        : VARCHAR2(80)
+  * email           : VARCHAR2(120)
+  * cargo           : VARCHAR2(60)
   * fecha_ingreso   : DATE
+  * salario         : NUMBER(12,2)
   --
-  * id_departamento : NUMBER <<FK>>
-  id_supervisor     : NUMBER <<FK>>
+  * id_departamento : NUMBER(3) <<FK>>
+  id_supervisor     : NUMBER(6) <<FK>>
 }
 
 ' ============================================================
