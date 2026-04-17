@@ -35,3 +35,5 @@ GRANT CREATE ANY TABLE TO quindioflix;
 -- Para los tablespaces del proyecto
 GRANT CREATE ANY DIRECTORY TO quindioflix;
 GRANT UNLIMITED TABLESPACE TO quindioflix;
+
+
