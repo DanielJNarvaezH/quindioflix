@@ -1,6 +1,6 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
--- Script  : NT1_nucleo1_consultas_NT1_2_PIVOT.sql
+-- Script  : NT1_nucleo1_consultas_NT1_2_PIVOT_NT1_5_UNPIVOT.sql
 -- Runner  : Flyway 9.22.3 (JDBC — no SQL*Plus)
 -- Autores : Equipo QuindioFlix
 -- Nucleo  : NT1 — PIVOT, UNPIVOT, ROLLUP, CUBE, GROUPING SETS,
