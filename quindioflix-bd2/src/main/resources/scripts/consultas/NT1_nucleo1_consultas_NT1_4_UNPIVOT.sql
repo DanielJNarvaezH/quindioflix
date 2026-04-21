@@ -1,7 +1,7 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
 -- Script  : NT1_nucleo1_consultas_NT1_4_UNPIVOT.sql
--- Autor   : Daniel Narvaez
+-- Autores : Equipo QuindioFlix
 -- Nucleo  : NT1-4 — UNPIVOT usuarios pivoteados a filas normalizadas
 --
 -- DESCRIPCION:
