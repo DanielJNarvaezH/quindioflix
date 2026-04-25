@@ -1,6 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<SchemaObject class="oracle.dbtools.crest.model.design.relational.SchemaObject" name="QUINDIOFLIX" directorySegmentName="seg_0" id="6C866445-8FA7-4445-3892-4E79D21C6FC5">
-<createdBy>Dell</createdBy>
-<createdTime>2026-04-25 03:00:08 UTC</createdTime>
-<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
-</SchemaObject>
