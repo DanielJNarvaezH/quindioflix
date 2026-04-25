@@ -1,0 +1,112 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="EMPLEADOS" directorySegmentName="seg_0" id="C22231C4-FDAB-D580-FAB3-7018E43E45BB">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<schemaObject>6C866445-8FA7-4445-3892-4E79D21C6FC5</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF741516-EF4B-629E-34A5-9B0B03D9B16C</segment>
+<tableSpace>34FB7E37-9A8F-EB75-023F-4DAD9505FBF0</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID_SUPERVISOR" id="1F140953-07EF-23BF-0A4F-0A501CD01295">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<defaultValue>NULL</defaultValue>
+</ColumnProxy>
+<ColumnProxy name="FECHA_INGRESO" id="277D1DE8-0EF4-9A18-8CFD-BC005747EACA">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_DEPARTAMENTO" id="43490F08-D91F-9DCE-5E64-7B6CDCC75795">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_EMPLEADO" id="4928FEC5-1456-8458-0254-7CF1B10FBFE6">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<autoIncrementDDL>IDENTITY_CLAUSE</autoIncrementDDL>
+</ColumnProxy>
+<ColumnProxy name="CARGO" id="8E4A9832-B312-2DDF-D861-25904B8F4A94">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="NOMBRE" id="9EEF7B3E-79DD-C30E-4CB7-2F19EEB6E396">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="APELLIDO" id="C1BAFD22-67F5-933D-3231-C7965BC5EF67">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="EMAIL" id="EA2E8A3B-9189-06C5-305C-9BA54BF2AB98">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="SALARIO" id="FD08EB74-894F-8DA0-F49A-1D8D0B263B56">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="UQ_EMPLEADOS_EMAIL" id="B4A274EA-41AF-92FF-85E6-4301174B16C3">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<schemaObject>6C866445-8FA7-4445-3892-4E79D21C6FC5</schemaObject>
+<segment>F03E7536-C2AA-8513-1EC0-629F28D3674F</segment>
+<tableSpace>953F27AC-8C4E-76A2-4472-12C7AD6D80E4</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_EMPLEADOS_SUPERV" id="6E2BA9B1-4AB9-379D-2FA6-A57EDD3A66D0">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_EMPLEADOS_DEPTO" id="DCFA7C73-903B-7835-CF11-E1A9537B8F48">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="EMPLEADOS_PK" id="50534E52-64BD-C550-29E5-275593F00C52">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<schemaObject>6C866445-8FA7-4445-3892-4E79D21C6FC5</schemaObject>
+<segment>F03E7536-C2AA-8513-1EC0-629F28D3674F</segment>
+<tableSpace>34FB7E37-9A8F-EB75-023F-4DAD9505FBF0</tableSpace>
+<indexSegment>F03E7536-C2AA-8513-1EC0-629F28D3674F</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="UQ_EMPLEADOS_EMAIL" id="C0C9A693-68D0-ED69-306B-D7B491CF3C3D">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<segment>F03E7536-C2AA-8513-1EC0-629F28D3674F</segment>
+<tableSpace>953F27AC-8C4E-76A2-4472-12C7AD6D80E4</tableSpace>
+<existingIndex>B4A274EA-41AF-92FF-85E6-4301174B16C3</existingIndex>
+<indexSegment>F03E7536-C2AA-8513-1EC0-629F28D3674F</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev20c>

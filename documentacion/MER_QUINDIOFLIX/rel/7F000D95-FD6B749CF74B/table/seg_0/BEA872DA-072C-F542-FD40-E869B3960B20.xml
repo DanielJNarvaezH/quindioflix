@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BEA872DA-072C-F542-FD40-E869B3960B20" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="PAGOS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>PAGOS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Registro de cobros mensuales realizados por los usuarios de QuindioFlix.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_PAGO" id="22350B3A-14FA-A0BC-13DE-207DAE5953CF">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>ID_PAGO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico del pago.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="FECHA_PAGO" id="F1926655-BB23-AC41-5D1A-81E39A44A5A9">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>FECHA_PAGO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Fecha en que se realizo o registro el pago.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MONTO" id="798B9E78-A022-B190-483E-7B90E2C8ACA9">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>MONTO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Monto cobrado en pesos colombianos (despues de aplicar descuentos).]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PAGOS_MONTO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="monto &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="monto &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="METODO_PAGO" id="00893646-6A6D-F130-01AF-DFABE7F45125">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>METODO_PAGO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Medio de pago: TARJETA_CREDITO, TARJETA_DEBITO, PSE, EFECTIVO, NEQUI o DAVIPLATA.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PAGOS_METODO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>20 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;DAVIPLATA&apos;" description=""/>
+<valueDef value="&apos;EFECTIVO&apos;" description=""/>
+<valueDef value="&apos;NEQUI&apos;" description=""/>
+<valueDef value="&apos;PSE&apos;" description=""/>
+<valueDef value="&apos;TARJETA_CREDITO&apos;" description=""/>
+<valueDef value="&apos;TARJETA_DEBITO&apos;" description=""/>
+</listOfValues>
+<ownDataTypeParameters>20 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTADO_PAGO" id="B4364D95-A6F0-41A8-5AEE-433DD8626C39">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>ESTADO_PAGO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Estado del pago: PENDIENTE, EXITOSO, FALLIDO o REEMBOLSADO.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PAGOS_ESTADO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;EXITOSO&apos;" description=""/>
+<valueDef value="&apos;FALLIDO&apos;" description=""/>
+<valueDef value="&apos;PENDIENTE&apos;" description=""/>
+<valueDef value="&apos;REEMBOLSADO&apos;" description=""/>
+</listOfValues>
+<defaultValue>&apos;PENDIENTE&apos;</defaultValue>
+<ownDataTypeParameters>15 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCUENTO_APLICADO" id="0CAF463A-D2DF-C92A-9B96-EF3A37AA8A5C">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>DESCUENTO_APLICADO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Porcentaje de descuento aplicado por programa de referidos (0 a 100).]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PAGOS_DESCUENTO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>,5,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<listOfRanges>
+<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
+<beginValue>0</beginValue>
+<endValue>100</endValue>
+</rangeDef>
+</listOfRanges>
+</Column>
+<Column name="ID_USUARIO" id="F43D052D-39FF-C1C7-964C-1F0B4D36855E">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PAGOS</sourceObjSchema>
+<sourceObjName>ID_USUARIO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia USUARIOS: usuario que realizo este pago.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4B68E906-A12C-E182-D897-4CB023CEC372" referredColumn="1F62AF5B-C74C-53CB-FF13-22B5AE60BE18"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="17E77DD3-B4EB-C0D0-5862-9B9C38151E9A" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="PAGOS_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008616</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="22350B3A-14FA-A0BC-13DE-207DAE5953CF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F7CCAECE-09B7-34C8-065A-70B84F4B9FAA" name="FK_PAGOS_USUARIO">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F43D052D-39FF-C1C7-964C-1F0B4D36855E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

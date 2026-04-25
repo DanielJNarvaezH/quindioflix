@@ -1,0 +1,94 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="CEBC9642-8581-0BA3-24D1-5FCF6857CA22" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="CATEGORIAS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>CATEGORIAS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Categorias de contenido del catalogo QuindioFlix.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CATEGORIA" id="4D88DE2C-B5B8-5428-E781-B8B9F106D415">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>CATEGORIAS</sourceObjSchema>
+<sourceObjName>ID_CATEGORIA</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico de la categoria.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE" id="AF925FE8-62D5-4D9A-BBB0-705D8D484FC2">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>CATEGORIAS</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Nombre de la categoria: Peliculas, Series, Documentales, Musica, Podcasts.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="24C120D2-78F4-9902-95DB-E4EE931F4FA9" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="CATEGORIAS_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008528</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:12 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4D88DE2C-B5B8-5428-E781-B8B9F106D415"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5315948F-75C4-DFDF-E9A9-AC723E094217" name="UQ_CATEGORIAS_NOMBRE">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_CATEGORIAS_NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF925FE8-62D5-4D9A-BBB0-705D8D484FC2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="C641EE9A-F414-CD80-3350-2509FBC667D6" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="UQ_CATEGORIAS_NOMBRE">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_CATEGORIAS_NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:12 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF925FE8-62D5-4D9A-BBB0-705D8D484FC2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

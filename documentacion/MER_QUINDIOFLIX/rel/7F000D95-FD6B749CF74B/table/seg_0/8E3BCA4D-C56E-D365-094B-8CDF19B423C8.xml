@@ -1,0 +1,184 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="8E3BCA4D-C56E-D365-094B-8CDF19B423C8" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="EPISODIOS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>EPISODIOS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Episodios de cada temporada de series y podcasts.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_EPISODIO" id="D5B3E5A4-C161-260D-9708-74533A98F37D">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>ID_EPISODIO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico del episodio.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NUMERO_EPISODIO" id="5468A1C1-AE57-130A-965B-916D2A77B69C">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>NUMERO_EPISODIO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Numero del episodio dentro de su temporada.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_EPISODIOS_NUMERO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="numero_episodio &gt;= 1"/>
+<implementationDef dbType="Oracle Database 21c" definition="numero_episodio &gt;= 1"/>
+</checkConstraint>
+<ownDataTypeParameters>,4,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TITULO_EPISODIO" id="FD283977-516A-434C-F4CA-4B25BFC21FB1">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>TITULO_EPISODIO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Titulo oficial del episodio.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>200 BYTE</dataTypeSize>
+<ownDataTypeParameters>200 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DURACION_MIN" id="0ED0BC9C-F076-1248-28F3-1FE57D7E7EC7">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>DURACION_MIN</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Duracion del episodio en minutos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_EPISODIOS_DURACION</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>5</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="duracion_min &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="duracion_min &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,5,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="SINOPSIS" id="EBD68258-BF27-45DF-F24D-465FE4F45ED6">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>SINOPSIS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Descripcion del episodio. Puede ser NULL.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>2000 BYTE</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>2000 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_TEMPORADA" id="4958BA3B-7A7D-A3E4-EF5C-76D2995464AC">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>EPISODIOS</sourceObjSchema>
+<sourceObjName>ID_TEMPORADA</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia TEMPORADAS: temporada a la que pertenece este episodio.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="61698C15-F893-8C5A-FE9A-E78AE8577024" referredColumn="F7117DF9-8940-D09B-F9AC-C81FCD9C0897"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="8DB123E0-D77B-4B72-439B-AFA7FAE90A2D" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="EPISODIOS_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008579</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D5B3E5A4-C161-260D-9708-74533A98F37D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="8D5D604D-CA77-01AD-2679-CEAA137F8FEB" name="UQ_EPISODIOS_NUMERO">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_EPISODIOS_NUMERO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4958BA3B-7A7D-A3E4-EF5C-76D2995464AC"/>
+<colUsage columnID="5468A1C1-AE57-130A-965B-916D2A77B69C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E9BCC259-C414-37C7-2DA5-EC4870BE52E2" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="UQ_EPISODIOS_NUMERO">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_EPISODIOS_NUMERO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4958BA3B-7A7D-A3E4-EF5C-76D2995464AC"/>
+<colUsage columnID="5468A1C1-AE57-130A-965B-916D2A77B69C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="671D2389-1327-1D61-7CEA-050F6F08B1D7" name="FK_EPISODIOS_TEMPORADA">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4958BA3B-7A7D-A3E4-EF5C-76D2995464AC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

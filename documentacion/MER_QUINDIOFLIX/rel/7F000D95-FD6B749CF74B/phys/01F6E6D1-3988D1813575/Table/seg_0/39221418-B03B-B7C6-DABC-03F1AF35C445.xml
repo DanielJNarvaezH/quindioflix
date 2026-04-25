@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.TableProxyOraclev20c" name="CONTENIDO_GENEROS" directorySegmentName="seg_0" id="39221418-B03B-B7C6-DABC-03F1AF35C445">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<schemaObject>6C866445-8FA7-4445-3892-4E79D21C6FC5</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>AF741516-EF4B-629E-34A5-9B0B03D9B16C</segment>
+<tableSpace>34FB7E37-9A8F-EB75-023F-4DAD9505FBF0</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="ID_GENERO" id="86FBD4D3-0D69-A223-9E1C-3D49B6B7EF4D">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="ID_CONTENIDO" id="DE202673-E225-70CB-AA99-3852FC35DA52">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<indexProxies>
+<IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="PK_CONTENIDO_GENEROS" id="0AF73A4F-A05C-8A08-32F3-D6712D59B075">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<schemaObject>6C866445-8FA7-4445-3892-4E79D21C6FC5</schemaObject>
+<segment>F03E7536-C2AA-8513-1EC0-629F28D3674F</segment>
+<tableSpace>953F27AC-8C4E-76A2-4472-12C7AD6D80E4</tableSpace>
+</IndexProxy>
+</indexProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CG_GENERO" id="34572325-3DDF-ACBE-066D-3A0F7CA1FEDE">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_CG_CONTENIDO" id="70D5D85D-1DB6-7F9D-24E3-E648A6AD7C75">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="PK_CONTENIDO_GENEROS" id="A62F0B66-A87C-FD17-B1E6-A810AC306106">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<segment>F03E7536-C2AA-8513-1EC0-629F28D3674F</segment>
+<tableSpace>953F27AC-8C4E-76A2-4472-12C7AD6D80E4</tableSpace>
+<existingIndex>0AF73A4F-A05C-8A08-32F3-D6712D59B075</existingIndex>
+<indexSegment>F03E7536-C2AA-8513-1EC0-629F28D3674F</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev20c>

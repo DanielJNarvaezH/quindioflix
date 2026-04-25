@@ -1,0 +1,104 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="39221418-B03B-B7C6-DABC-03F1AF35C445" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="CONTENIDO_GENEROS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>CONTENIDO_GENEROS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Tabla intermedia N:M que asocia cada contenido con sus generos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_CONTENIDO" id="DE202673-E225-70CB-AA99-3852FC35DA52">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>CONTENIDO_GENEROS</sourceObjSchema>
+<sourceObjName>ID_CONTENIDO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia CONTENIDO. Parte de la clave primaria compuesta.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CFE93723-95C1-04D4-1197-8868E6C9E703" referredColumn="9244EE1C-4A57-5FCF-DD27-243C9B40475A"/>
+</associations>
+</Column>
+<Column name="ID_GENERO" id="86FBD4D3-0D69-A223-9E1C-3D49B6B7EF4D">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>CONTENIDO_GENEROS</sourceObjSchema>
+<sourceObjName>ID_GENERO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia GENEROS. Parte de la clave primaria compuesta.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="06D9B441-85F9-25AC-35BF-F2D1661426BF" referredColumn="4D198445-C11E-3C30-AAA1-52A3C23265DB"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="A62F0B66-A87C-FD17-B1E6-A810AC306106" name="PK_CONTENIDO_GENEROS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>PK_CONTENIDO_GENEROS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE202673-E225-70CB-AA99-3852FC35DA52"/>
+<colUsage columnID="86FBD4D3-0D69-A223-9E1C-3D49B6B7EF4D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0AF73A4F-A05C-8A08-32F3-D6712D59B075" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="PK_CONTENIDO_GENEROS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>PK_CONTENIDO_GENEROS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE202673-E225-70CB-AA99-3852FC35DA52"/>
+<colUsage columnID="86FBD4D3-0D69-A223-9E1C-3D49B6B7EF4D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="70D5D85D-1DB6-7F9D-24E3-E648A6AD7C75" name="FK_CG_CONTENIDO">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE202673-E225-70CB-AA99-3852FC35DA52"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="34572325-3DDF-ACBE-066D-3A0F7CA1FEDE" name="FK_CG_GENERO">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="86FBD4D3-0D69-A223-9E1C-3D49B6B7EF4D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

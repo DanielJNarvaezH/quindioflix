@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="ED23D000-064C-0B7D-F270-CA69BD151828" containerWithKeyObject="992D4615-0074-CBE3-74BB-48BC85320A45" localFKIndex="F9902A71-9469-5509-57FB-583AE9A4808A" name="FK_CALIFICACIONES_CONTENIDO">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>FK_CALIFICACIONES_CONTENIDO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<referredTableLongName>QUINDIOFLIX.CONTENIDO</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>452207DA-2860-03F0-CBC3-8DD97BEBEC9F</referredTableID>
+<keyObject>9DAB4DC8-BF21-05AC-563F-4E0503DFDFCF</keyObject>
+<referredKeyID>9DAB4DC8-BF21-05AC-563F-4E0503DFDFCF</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_CONTENIDO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

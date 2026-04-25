@@ -1,0 +1,224 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="175922AC-2479-67C6-FE29-11007FB58A70" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="REPORTES_INAPROPIADO">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>REPORTES_INAPROPIADO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Reportes de contenido inapropiado realizados por perfiles de usuario.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_REPORTE" id="C61A6161-40EC-EEB6-F337-E3453F0AC7F9">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>ID_REPORTE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico del reporte.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="MOTIVO" id="8FDCE573-3F1B-95E7-EAA2-256A3C6DC2FC">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>MOTIVO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Descripcion del motivo por el que se reporta el contenido.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 BYTE</dataTypeSize>
+<ownDataTypeParameters>500 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ESTADO_REPORTE" id="6B32B73C-2FAC-4F2E-8CE0-22B2DA1315A8">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>ESTADO_REPORTE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Estado del reporte: PENDIENTE, EN_REVISION, RESUELTO o DESCARTADO.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_REPORTES_ESTADO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;DESCARTADO&apos;" description=""/>
+<valueDef value="&apos;EN_REVISION&apos;" description=""/>
+<valueDef value="&apos;PENDIENTE&apos;" description=""/>
+<valueDef value="&apos;RESUELTO&apos;" description=""/>
+</listOfValues>
+<defaultValue>&apos;PENDIENTE&apos;</defaultValue>
+<ownDataTypeParameters>15 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_REPORTE" id="257EB6D1-581F-8275-3169-F8754ADE4103">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>FECHA_REPORTE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Fecha en que se realizo el reporte.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="FECHA_RESOLUCION" id="D6ABF6B0-8EB5-220D-EC29-8321F02E7B5D">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>FECHA_RESOLUCION</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Fecha en que el moderador resolvio el reporte. NULL si aun esta pendiente.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_PERFIL_REPORTA" id="59F59D2F-8848-5CA3-9D2A-97A69CE4DDC3">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>ID_PERFIL_REPORTA</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia PERFILES: perfil que realizo el reporte.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FB4E96E1-D82D-1E19-66BB-E9F987E0F291" referredColumn="B13E6603-2381-D697-3E08-C92FD122160F"/>
+</associations>
+</Column>
+<Column name="ID_CONTENIDO" id="043D8717-AEFE-6268-D8BC-E5588FDE8B0A">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>ID_CONTENIDO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia CONTENIDO: contenido reportado como inapropiado.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="ED5FFDAD-AADD-0AEE-21E6-F04C68C72E7A" referredColumn="9244EE1C-4A57-5FCF-DD27-243C9B40475A"/>
+</associations>
+</Column>
+<Column name="ID_MODERADOR" id="4AC92BE5-6D14-5A4D-375F-9B3D6F9EEFB8">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>REPORTES_INAPROPIADO</sourceObjSchema>
+<sourceObjName>ID_MODERADOR</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia USUARIOS: moderador asignado para resolver el reporte. NULL hasta asignacion.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<defaultValue>NULL</defaultValue>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CFB00D84-D9AD-9DB2-2FBA-79FE76D262AE" referredColumn="1F62AF5B-C74C-53CB-FF13-22B5AE60BE18"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7C4E4900-EBA7-0D47-81CB-C43637EF7F53" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="REPORTES_INAPROPIADO_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008657</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="C61A6161-40EC-EEB6-F337-E3453F0AC7F9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2D8AE8F5-0CFF-FC66-E42E-CCB2212753C5" name="FK_REPORTES_CONTENIDO">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="043D8717-AEFE-6268-D8BC-E5588FDE8B0A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="EA271A0F-2D17-2B20-DCED-DEF406716895" name="FK_REPORTES_MODERADOR">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4AC92BE5-6D14-5A4D-375F-9B3D6F9EEFB8"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BFFDE5CA-A97B-8351-BCC0-7FF711DFAABF" name="FK_REPORTES_PERFIL">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="59F59D2F-8848-5CA3-9D2A-97A69CE4DDC3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+<tableCheckConstraints itemClass="oracle.dbtools.crest.model.design.constraint.TableLevelConstraint">
+<tableCheckConstraint name="CHK_REPORTES_FECHAS" directorySegmentName="seg_0" id="19E8E5CC-3214-4487-3FF6-21D7D85EF02B">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>CHK_REPORTES_FECHAS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:18 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<rule><![CDATA[fecha_resolucion IS NULL OR fecha_resolucion >= fecha_reporte]]></rule>
+</tableCheckConstraint>
+</tableCheckConstraints>
+</Table>

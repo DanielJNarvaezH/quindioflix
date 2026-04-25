@@ -1,0 +1,155 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3D9A9434-C19D-885F-EF0B-2032EEB5B68B" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="FAVORITOS">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>FAVORITOS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Lista de contenido marcado como favorito por cada perfil.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_FAVORITO" id="F895210D-5FEB-8A05-1CEF-7D4B3D32C9CC">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>FAVORITOS</sourceObjSchema>
+<sourceObjName>ID_FAVORITO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico del registro de favorito.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="FECHA_AGREGADO" id="55FDD00C-0F6A-EFA3-5479-D73D003F12A4">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>FAVORITOS</sourceObjSchema>
+<sourceObjName>FECHA_AGREGADO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Fecha en que el perfil agrego el contenido a favoritos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<dataTypeSize>7</dataTypeSize>
+<defaultValue>SYSDATE</defaultValue>
+<ownDataTypeParameters>7,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ID_PERFIL" id="EDAC1BB4-FF17-EFB1-94BB-508BF520F689">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>FAVORITOS</sourceObjSchema>
+<sourceObjName>ID_PERFIL</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia PERFILES: perfil propietario de la lista de favoritos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="BF637596-BC62-6904-E838-83C181F6FE19" referredColumn="B13E6603-2381-D697-3E08-C92FD122160F"/>
+</associations>
+</Column>
+<Column name="ID_CONTENIDO" id="23F72E72-F9EF-EB1D-A374-EC92AFDAB568">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>FAVORITOS</sourceObjSchema>
+<sourceObjName>ID_CONTENIDO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[FK hacia CONTENIDO: contenido agregado a favoritos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>8</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,8,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C7AA7833-8E68-2280-A8A1-4525657E794E" referredColumn="9244EE1C-4A57-5FCF-DD27-243C9B40475A"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="5F66D7F4-C8BE-BFFB-212A-53575FB9E086" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="FAVORITOS_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008645</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F895210D-5FEB-8A05-1CEF-7D4B3D32C9CC"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="94C3F01A-36BE-E002-C2D0-829C7FE8726A" name="UQ_FAVORITOS_PERFIL_CONT">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_FAVORITOS_PERFIL_CONT</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EDAC1BB4-FF17-EFB1-94BB-508BF520F689"/>
+<colUsage columnID="23F72E72-F9EF-EB1D-A374-EC92AFDAB568"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0052CBA6-F383-7BB4-9B49-63E3A23C90CC" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="UQ_FAVORITOS_PERFIL_CONT">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_FAVORITOS_PERFIL_CONT</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EDAC1BB4-FF17-EFB1-94BB-508BF520F689"/>
+<colUsage columnID="23F72E72-F9EF-EB1D-A374-EC92AFDAB568"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="45E45C59-519A-364A-0114-983684C8E870" name="FK_FAVORITOS_CONTENIDO">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23F72E72-F9EF-EB1D-A374-EC92AFDAB568"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="57D1E834-D2F1-5955-7009-0C0152EBD4AF" name="FK_FAVORITOS_PERFIL">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="EDAC1BB4-FF17-EFB1-94BB-508BF520F689"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,182 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="66587F6E-48D2-970D-2B22-26833C2C52FC" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="PLANES">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>PLANES</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:08 UTC</createdTime>
+<commentInRDBMS><![CDATA[Planes de suscripcion disponibles en QuindioFlix (Basico, Estandar, Premium).]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="ID_PLAN" id="725F8536-AF8A-2F75-1B1A-E7DC58A76C4C">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>ID_PLAN</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Identificador unico del plan. Generado automaticamente.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>3</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,3,0</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementGenerateAlways>true</autoIncrementGenerateAlways>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementDisableCache>false</autoIncrementDisableCache>
+<autoIncrementCache>20</autoIncrementCache>
+<autoIncrementOrder>false</autoIncrementOrder>
+</Column>
+<Column name="NOMBRE" id="612A3EE1-A560-59CD-5D20-23DBDBC94E90">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Nombre del plan: Basico, Estandar o Premium.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>30 BYTE</dataTypeSize>
+<ownDataTypeParameters>30 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRECIO_MENSUAL" id="7BF9E0D8-BE5F-E231-8283-9B30747ADF52">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>PRECIO_MENSUAL</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Precio mensual del plan en pesos colombianos.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PLANES_PRECIO</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>2</dataTypeScale>
+<checkConstraint>
+<implementationDef dbType="Generic Constraint" definition="precio_mensual &gt; 0"/>
+<implementationDef dbType="Oracle Database 21c" definition="precio_mensual &gt; 0"/>
+</checkConstraint>
+<ownDataTypeParameters>,10,2</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MAX_PANTALLAS" id="3666EB33-4F9D-8EA3-1FC7-D16B85F21247">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>MAX_PANTALLAS</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Numero maximo de pantallas simultaneas permitidas por el plan.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PLANES_PANTALLAS</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<listOfRanges>
+<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
+<beginValue>1</beginValue>
+<endValue>4</endValue>
+</rangeDef>
+</listOfRanges>
+</Column>
+<Column name="CALIDAD_VIDEO" id="F3788924-F79D-98F3-3D94-934F2470F79B">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>CALIDAD_VIDEO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Calidad maxima de video del plan: SD, HD o 4K.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PLANES_CALIDAD</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 BYTE</dataTypeSize>
+<listOfValues>
+<valueDef value="&apos;4K&apos;" description=""/>
+<valueDef value="&apos;HD&apos;" description=""/>
+<valueDef value="&apos;SD&apos;" description=""/>
+</listOfValues>
+<ownDataTypeParameters>10 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MAX_PERFILES" id="240CCA94-0EF3-9FF8-2D19-0AC188DD2C70">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>PLANES</sourceObjSchema>
+<sourceObjName>MAX_PERFILES</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[Numero maximo de perfiles que puede crear un usuario con este plan.]]></commentInRDBMS>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<constraintName>CHK_PLANES_PERFILES</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,1,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<listOfRanges>
+<rangeDef class="oracle.dbtools.crest.model.design.constraint.AVT">
+<beginValue>1</beginValue>
+<endValue>5</endValue>
+</rangeDef>
+</listOfRanges>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0C239BED-84D8-189A-48F5-9A664487479D" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="PLANES_PK">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>SYS_C008506</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="725F8536-AF8A-2F75-1B1A-E7DC58A76C4C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="166F2048-53A9-954A-0694-D27684A096E8" name="UQ_PLANES_NOMBRE">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_PLANES_NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:15 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="612A3EE1-A560-59CD-5D20-23DBDBC94E90"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CD65F501-D90B-FA80-0998-E51A25EE2F6B" schemaObject="6C866445-8FA7-4445-3892-4E79D21C6FC5" name="UQ_PLANES_NOMBRE">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>UQ_PLANES_NOMBRE</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:13 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="612A3EE1-A560-59CD-5D20-23DBDBC94E90"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

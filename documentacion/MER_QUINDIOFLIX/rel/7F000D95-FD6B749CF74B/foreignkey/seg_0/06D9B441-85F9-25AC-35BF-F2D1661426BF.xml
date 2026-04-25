@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="06D9B441-85F9-25AC-35BF-F2D1661426BF" containerWithKeyObject="39221418-B03B-B7C6-DABC-03F1AF35C445" localFKIndex="34572325-3DDF-ACBE-066D-3A0F7CA1FEDE" name="FK_CG_GENERO">
+<sourceConnName>quindioflix-local</sourceConnName>
+<sourceObjSchema>QUINDIOFLIX</sourceObjSchema>
+<sourceObjName>FK_CG_GENERO</sourceObjName>
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 03:00:19 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<referredTableLongName>QUINDIOFLIX.GENEROS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>24F153DC-D288-D62D-DE5C-5EC8683A9EFC</referredTableID>
+<keyObject>36302474-A3E9-EE33-79E1-AB703CE6ECB6</keyObject>
+<referredKeyID>36302474-A3E9-EE33-79E1-AB703CE6ECB6</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>ID_GENERO</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

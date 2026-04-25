@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="MER_QUINDIOFLIX" id="17B4BA5E-2878-23FD-BB00-9E86B848C0C9" version="3.5">
+<createdBy>Dell</createdBy>
+<createdTime>2026-04-25 02:47:44 UTC</createdTime>
+<ownerDesignName>MER_QUINDIOFLIX</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>17B4BA5E-2878-23FD-BB00-9E86B848C0C9</designId>
+</OSDM_Design>
