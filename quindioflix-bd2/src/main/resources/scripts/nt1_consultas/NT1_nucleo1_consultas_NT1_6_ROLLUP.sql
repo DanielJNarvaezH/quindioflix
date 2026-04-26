@@ -1,7 +1,7 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
 -- Script  : NT1_nucleo1_consultas_NT1_6_ROLLUP.sql
--- Autores : CRISTHIAN EDUARDO OSORIO RESTREPO
+-- Autores : Equipo QuindioFlix
 -- Nucleo  : NT1-6 — ROLLUP ingresos por ciudad y plan con subtotales
 --
 -- DESCRIPCION:

@@ -1,7 +1,7 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
 -- Script  : NT1_nucleo1_consultas_NT1_3_PIVOT.sql
--- Autores : CRISTHIAN EDUARDO OSORIO RESTREPO
+-- Autores : Equipo QuindioFlix
 -- Nucleo  : NT1-3 — PIVOT reproducciones por categoria y dispositivo
 --
 -- DESCRIPCION:

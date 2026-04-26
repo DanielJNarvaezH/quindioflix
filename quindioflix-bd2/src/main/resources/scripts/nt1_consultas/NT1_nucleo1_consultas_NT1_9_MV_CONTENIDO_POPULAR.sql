@@ -1,7 +1,7 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
 -- Script  : NT1_nucleo1_consultas_NT1_9_MV_CONTENIDO_POPULAR.sql
--- Autores : CRISTHIAN EDUARDO OSORIO RESTREPO
+-- Autores : Equipo QuindioFlix
 -- Nucleo  : NT1-9 — Vista materializada: Contenido mas popular
 --
 -- DESCRIPCION:
