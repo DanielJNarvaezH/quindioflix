@@ -1,7 +1,7 @@
 -- =============================================================================
 -- NT1: Consultas Avanzadas — QuindioFlix
--- Script  : R__nucleo1_consultas.sql
--- Runner  : Flyway 9.22.3 (prefijo R = script repetible)
+-- Script  : NT1__nucleo1_consultas_NT1_COMPLETO_revisado.sql
+-- Runner  : manual en la bd local de oracle de cada uno
 -- Autores : Daniel Narvaez, Diego Garcia, Cristhian Osorio
 -- Nucleo  : NT1 — Consultas Parametrizadas, PIVOT, UNPIVOT, ROLLUP,
 --           CUBE, GROUPING SETS, Vistas Materializadas
