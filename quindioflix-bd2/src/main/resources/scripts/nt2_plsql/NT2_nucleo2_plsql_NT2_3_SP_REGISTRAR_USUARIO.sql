@@ -33,7 +33,7 @@
 --   2. Validar que el email no esta duplicado        -> EMAIL_DUPLICADO
 --   3. INSERT en USUARIOS (estado ACTIVO, 30 dias de vigencia)
 --   4. INSERT en PERFILES (perfil 'Principal', tipo ADULTO)
---   5. INSERT en PAGOS (monto del plan, estado APROBADO)
+--   5. INSERT en PAGOS (monto del plan, estado EXITOSO)
 --   6. COMMIT
 --   7. Retornar id_usuario creado y mostrar resumen
 --
@@ -81,96 +81,96 @@ BEGIN
     -- =========================================================================
     -- PASO 1: Validar que el plan existe
     -- =========================================================================
-    BEGIN
-        SELECT *
-        INTO   v_plan
-        FROM   PLANES
-        WHERE  id_plan = p_id_plan;
-    EXCEPTION
+BEGIN
+SELECT *
+INTO   v_plan
+FROM   PLANES
+WHERE  id_plan = p_id_plan;
+EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RAISE_APPLICATION_ERROR(
                 -20012,
                 'PLAN_NO_EXISTE: No se encontro el plan con id = '
                 || p_id_plan || '. Planes validos: 1 (Basico), 2 (Estandar), 3 (Premium).'
             );
-    END;
+END;
 
     -- =========================================================================
     -- PASO 2: Validar que el email no este duplicado
     -- =========================================================================
-    SELECT COUNT(*)
-    INTO   v_count_email
-    FROM   USUARIOS
-    WHERE  email = LOWER(TRIM(p_email));
+SELECT COUNT(*)
+INTO   v_count_email
+FROM   USUARIOS
+WHERE  email = LOWER(TRIM(p_email));
 
-    IF v_count_email > 0 THEN
+IF v_count_email > 0 THEN
         RAISE_APPLICATION_ERROR(
             -20011,
             'EMAIL_DUPLICADO: El email "' || LOWER(TRIM(p_email))
             || '" ya esta registrado en la plataforma.'
             || ' Use otro correo o recupere su contrasena.'
         );
-    END IF;
+END IF;
 
     -- =========================================================================
     -- PASO 3: Crear la cuenta del usuario
     -- fecha_vencimiento = SYSDATE + 30 (primer mes de suscripcion)
     -- estado_cuenta = ACTIVO desde el primer pago aprobado
     -- =========================================================================
-    INSERT INTO USUARIOS (
-        nombre, apellido, email, contrasena_hash,
-        fecha_registro, fecha_vencimiento,
-        estado_cuenta, es_moderador,
-        ciudad, id_plan, id_referidor
-    )
-    VALUES (
-        TRIM(p_nombre),
-        TRIM(p_apellido),
-        LOWER(TRIM(p_email)),
-        p_contrasena_hash,
-        SYSDATE,
-        SYSDATE + 30,
-        'ACTIVO',
-        'N',
-        TRIM(p_ciudad),
-        p_id_plan,
-        p_id_referidor
-    )
+INSERT INTO USUARIOS (
+    nombre, apellido, email, contrasena_hash,
+    fecha_registro, fecha_vencimiento,
+    estado_cuenta, es_moderador,
+    ciudad_residencia, id_plan, id_referidor
+)
+VALUES (
+           TRIM(p_nombre),
+           TRIM(p_apellido),
+           LOWER(TRIM(p_email)),
+           p_contrasena_hash,
+           SYSDATE,
+           SYSDATE + 30,
+           'ACTIVO',
+           'N',
+           TRIM(p_ciudad),
+           p_id_plan,
+           p_id_referidor
+       )
     RETURNING id_usuario INTO v_id_nuevo;
 
-    -- =========================================================================
-    -- PASO 4: Crear perfil predeterminado 'Principal'
-    -- Cada cuenta empieza con un perfil adulto de nombre Principal
-    -- =========================================================================
-    INSERT INTO PERFILES (nombre, tipo_perfil, id_usuario)
-    VALUES ('Principal', 'ADULTO', v_id_nuevo);
+-- =========================================================================
+-- PASO 4: Crear perfil predeterminado 'Principal'
+-- Cada cuenta empieza con un perfil adulto de nombre Principal
+-- =========================================================================
+INSERT INTO PERFILES (nombre, tipo_perfil, id_usuario)
+VALUES ('Principal', 'ADULTO', v_id_nuevo);
 
-    -- =========================================================================
-    -- PASO 5: Registrar el primer pago por el monto del plan elegido
-    -- El pago se registra como APROBADO para activar la cuenta de inmediato
-    -- =========================================================================
-    INSERT INTO PAGOS (
-        fecha_pago, monto, metodo_pago,
-        estado_pago, descuento_aplicado, id_usuario
-    )
-    VALUES (
-        SYSDATE,
-        v_plan.precio_mensual,
-        p_metodo_pago,
-        'APROBADO',
-        0,
-        v_id_nuevo
-    );
+-- =========================================================================
+-- PASO 5: Registrar el primer pago por el monto del plan elegido
+-- El pago se registra como APROBADO para activar la cuenta de inmediato
+-- =========================================================================
+INSERT INTO PAGOS (
+    fecha_pago, monto, metodo_pago,
+    estado_pago, descuento_aplicado, id_usuario
+)
+VALUES (
+           SYSDATE,
+           v_plan.precio_mensual,
+           p_metodo_pago,
+           'EXITOSO',
+           0,
+           v_id_nuevo
+       );
 
-    -- =========================================================================
-    -- PASO 6: Confirmar la transaccion completa
-    -- =========================================================================
-    COMMIT;
+-- =========================================================================
+-- PASO 6: Confirmar la transaccion completa
+-- =========================================================================
+COMMIT;
 
-    -- =========================================================================
-    -- PASO 7: Retornar el id y mostrar resumen del registro
-    -- =========================================================================
-    p_id_usuario := v_id_nuevo;
+-- =========================================================================
+-- PASO 7: Retornar el id y mostrar resumen del registro
+-- =========================================================================
+p_id_usuario := v_id_nuevo;
 
     DBMS_OUTPUT.PUT_LINE('');
     DBMS_OUTPUT.PUT_LINE('==============================================');
@@ -185,7 +185,7 @@ BEGIN
                          || ' ($' || v_plan.precio_mensual || '/mes)');
     DBMS_OUTPUT.PUT_LINE('  Vencimiento : ' || TO_CHAR(SYSDATE + 30, 'DD/MM/YYYY'));
     DBMS_OUTPUT.PUT_LINE('  Pago        : $' || v_plan.precio_mensual
-                         || ' via ' || p_metodo_pago || ' — APROBADO');
+                         || ' via ' || p_metodo_pago || ' — EXITOSO');
     DBMS_OUTPUT.PUT_LINE('  Perfil      : "Principal" (ADULTO) creado');
     DBMS_OUTPUT.PUT_LINE('  Referidor   : ' || NVL(TO_CHAR(p_id_referidor), 'ninguno'));
     DBMS_OUTPUT.PUT_LINE('==============================================');
@@ -202,7 +202,7 @@ EXCEPTION
     -- =========================================================================
     -- Cualquier otro error inesperado de Oracle
     -- =========================================================================
-    WHEN OTHERS THEN
+WHEN OTHERS THEN
         ROLLBACK;
         RAISE_APPLICATION_ERROR(
             -20099,
@@ -227,7 +227,7 @@ PROMPT ============================================================
 PROMPT PRUEBA 1: Registro exitoso (plan Basico, metodo PSE)
 PROMPT ============================================================
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
     SP_REGISTRAR_USUARIO(
         p_nombre          => 'Laura',
@@ -245,14 +245,14 @@ END;
 /
 -- Revertir para no acumular datos de prueba
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id FROM USUARIOS WHERE email = 'laura.montoya@test.com';
-    DELETE FROM PAGOS   WHERE id_usuario = v_id;
-    DELETE FROM PERFILES WHERE id_usuario = v_id;
-    DELETE FROM USUARIOS WHERE id_usuario = v_id;
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Prueba 1 revertida — BD en estado original.');
+SELECT id_usuario INTO v_id FROM USUARIOS WHERE email = 'laura.montoya@test.com';
+DELETE FROM PAGOS   WHERE id_usuario = v_id;
+DELETE FROM PERFILES WHERE id_usuario = v_id;
+DELETE FROM USUARIOS WHERE id_usuario = v_id;
+COMMIT;
+DBMS_OUTPUT.PUT_LINE('Prueba 1 revertida — BD en estado original.');
 END;
 /
 
@@ -264,7 +264,7 @@ PROMPT ============================================================
 PROMPT PRUEBA 2: Registro exitoso (plan Premium, con referidor)
 PROMPT ============================================================
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
     SP_REGISTRAR_USUARIO(
         p_nombre          => 'Carlos',
@@ -281,14 +281,14 @@ BEGIN
 END;
 /
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id FROM USUARIOS WHERE email = 'carlos.rios@test.com';
-    DELETE FROM PAGOS   WHERE id_usuario = v_id;
-    DELETE FROM PERFILES WHERE id_usuario = v_id;
-    DELETE FROM USUARIOS WHERE id_usuario = v_id;
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('Prueba 2 revertida — BD en estado original.');
+SELECT id_usuario INTO v_id FROM USUARIOS WHERE email = 'carlos.rios@test.com';
+DELETE FROM PAGOS   WHERE id_usuario = v_id;
+DELETE FROM PERFILES WHERE id_usuario = v_id;
+DELETE FROM USUARIOS WHERE id_usuario = v_id;
+COMMIT;
+DBMS_OUTPUT.PUT_LINE('Prueba 2 revertida — BD en estado original.');
 END;
 /
 
@@ -301,7 +301,7 @@ PROMPT ============================================================
 PROMPT PRUEBA 3: Error EMAIL_DUPLICADO
 PROMPT ============================================================
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
     SP_REGISTRAR_USUARIO(
         p_nombre          => 'Sofia',
@@ -327,7 +327,7 @@ PROMPT ============================================================
 PROMPT PRUEBA 4: Error PLAN_NO_EXISTE
 PROMPT ============================================================
 DECLARE
-    v_id NUMBER;
+v_id NUMBER;
 BEGIN
     SP_REGISTRAR_USUARIO(
         p_nombre          => 'Ana',

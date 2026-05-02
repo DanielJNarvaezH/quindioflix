@@ -66,34 +66,34 @@ BEGIN
     -- =========================================================================
     -- PASO 1: Obtener datos del usuario — valida existencia
     -- =========================================================================
-    BEGIN
-        SELECT *
-        INTO   v_usuario
-        FROM   USUARIOS
-        WHERE  id_usuario = p_id_usuario;
-    EXCEPTION
+BEGIN
+SELECT *
+INTO   v_usuario
+FROM   USUARIOS
+WHERE  id_usuario = p_id_usuario;
+EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RAISE_APPLICATION_ERROR(
                 -20021,
                 'USUARIO_NO_EXISTE: No se encontro el usuario con id = '
                 || p_id_usuario || '.'
             );
-    END;
+END;
 
     -- =========================================================================
     -- PASO 2: Obtener precio mensual del plan actual del usuario
     -- =========================================================================
-    SELECT *
-    INTO   v_plan
-    FROM   PLANES
-    WHERE  id_plan = v_usuario.id_plan;
+SELECT *
+INTO   v_plan
+FROM   PLANES
+WHERE  id_plan = v_usuario.id_plan;
 
-    -- =========================================================================
-    -- PASO 3: Calcular antiguedad en meses
-    -- MONTHS_BETWEEN devuelve fraccion — se usa el valor completo para
-    -- que el descuento sea exacto al mes cumplido.
-    -- =========================================================================
-    v_meses := MONTHS_BETWEEN(SYSDATE, v_usuario.fecha_registro);
+-- =========================================================================
+-- PASO 3: Calcular antiguedad en meses
+-- MONTHS_BETWEEN devuelve fraccion — se usa el valor completo para
+-- que el descuento sea exacto al mes cumplido.
+-- =========================================================================
+v_meses := MONTHS_BETWEEN(SYSDATE, v_usuario.fecha_registro);
 
     -- =========================================================================
     -- PASO 4: Determinar descuento segun antiguedad
@@ -102,9 +102,9 @@ BEGIN
         v_descuento := 15;
     ELSIF v_meses > 12 THEN
         v_descuento := 10;
-    ELSE
+ELSE
         v_descuento := 0;
-    END IF;
+END IF;
 
     -- =========================================================================
     -- PASO 5: Calcular monto final con descuento
@@ -132,12 +132,12 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('==============================================');
     DBMS_OUTPUT.PUT_LINE('');
 
-    RETURN v_monto;
+RETURN v_monto;
 
 EXCEPTION
     WHEN USUARIO_NO_EXISTE THEN
         RAISE;
-    WHEN OTHERS THEN
+WHEN OTHERS THEN
         RAISE_APPLICATION_ERROR(
             -20099,
             'FN_CALCULAR_MONTO — Error inesperado: ' || SQLERRM
@@ -163,13 +163,13 @@ PROMPT ============================================================
 PROMPT PRUEBA 1: Descuento 15% (mas de 24 meses — Sofia Perea)
 PROMPT ============================================================
 DECLARE
-    v_monto NUMBER;
+v_monto NUMBER;
     v_id    NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id FROM USUARIOS
-    WHERE  email = 'sofia.perea@quindioflix.com';
+SELECT id_usuario INTO v_id FROM USUARIOS
+WHERE  email = 'sofia.perea@quindioflix.com';
 
-    v_monto := FN_CALCULAR_MONTO(v_id);
+v_monto := FN_CALCULAR_MONTO(v_id);
     DBMS_OUTPUT.PUT_LINE('Resultado: $' || v_monto
                          || ' (esperado: $12,665.00)');
 END;
@@ -185,13 +185,13 @@ PROMPT ============================================================
 PROMPT PRUEBA 2: Descuento 10% (entre 12 y 24 meses — Daniela Parra)
 PROMPT ============================================================
 DECLARE
-    v_monto NUMBER;
+v_monto NUMBER;
     v_id    NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id FROM USUARIOS
-    WHERE  email = 'daniela.parra@quindioflix.com';
+SELECT id_usuario INTO v_id FROM USUARIOS
+WHERE  email = 'daniela.parra@quindioflix.com';
 
-    v_monto := FN_CALCULAR_MONTO(v_id);
+v_monto := FN_CALCULAR_MONTO(v_id);
     DBMS_OUTPUT.PUT_LINE('Resultado: $' || v_monto
                          || ' (esperado: ~$13,410.00)');
 END;
@@ -208,23 +208,23 @@ PROMPT ============================================================
 PROMPT PRUEBA 3: Sin descuento (menos de 12 meses — usuario temporal)
 PROMPT ============================================================
 DECLARE
-    v_monto   NUMBER;
+v_monto   NUMBER;
     v_id_temp NUMBER;
 BEGIN
     -- Insertar usuario temporal con fecha de hoy
-    INSERT INTO USUARIOS (
-        nombre, apellido, email, contrasena_hash,
-        fecha_registro, fecha_vencimiento,
-        estado_cuenta, es_moderador, ciudad, id_plan
-    )
-    VALUES (
-        'Test', 'Nuevo', 'test.nuevo.fn6@quindioflix.com', 'hash_temp',
-        SYSDATE, SYSDATE + 30,
-        'ACTIVO', 'N', 'Armenia', 2
-    )
+INSERT INTO USUARIOS (
+    nombre, apellido, email, contrasena_hash,
+    fecha_registro, fecha_vencimiento,
+    estado_cuenta, es_moderador, ciudad_residencia, id_plan
+)
+VALUES (
+           'Test', 'Nuevo', 'test.nuevo.fn6@quindioflix.com', 'hash_temp',
+           SYSDATE, SYSDATE + 30,
+           'ACTIVO', 'N', 'Armenia', 2
+       )
     RETURNING id_usuario INTO v_id_temp;
 
-    v_monto := FN_CALCULAR_MONTO(v_id_temp);
+v_monto := FN_CALCULAR_MONTO(v_id_temp);
     DBMS_OUTPUT.PUT_LINE('Resultado: $' || v_monto
                          || ' (esperado: $24,900.00 — sin descuento)');
 EXCEPTION
@@ -247,13 +247,13 @@ PROMPT ============================================================
 PROMPT PRUEBA 4: Descuento 15% en plan Premium (Marcela Botero)
 PROMPT ============================================================
 DECLARE
-    v_monto NUMBER;
+v_monto NUMBER;
     v_id    NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id FROM USUARIOS
-    WHERE  email = 'marcela.botero@quindioflix.com';
+SELECT id_usuario INTO v_id FROM USUARIOS
+WHERE  email = 'marcela.botero@quindioflix.com';
 
-    v_monto := FN_CALCULAR_MONTO(v_id);
+v_monto := FN_CALCULAR_MONTO(v_id);
     DBMS_OUTPUT.PUT_LINE('Resultado: $' || v_monto
                          || ' (esperado: $29,665.00)');
 END;
@@ -268,7 +268,7 @@ PROMPT ============================================================
 PROMPT PRUEBA 5: Error USUARIO_NO_EXISTE
 PROMPT ============================================================
 DECLARE
-    v_monto NUMBER;
+v_monto NUMBER;
 BEGIN
     v_monto := FN_CALCULAR_MONTO(99999);
 EXCEPTION
@@ -296,9 +296,9 @@ SELECT
         WHEN MONTHS_BETWEEN(SYSDATE, u.fecha_registro) > 24 THEN 15
         WHEN MONTHS_BETWEEN(SYSDATE, u.fecha_registro) > 12 THEN 10
         ELSE 0
-    END                                                  AS descuento_pct,
+        END                                                  AS descuento_pct,
     FN_CALCULAR_MONTO(u.id_usuario)                     AS monto_proximo_mes
 FROM  USUARIOS u
-JOIN  PLANES   p ON p.id_plan = u.id_plan
+          JOIN  PLANES   p ON p.id_plan = u.id_plan
 WHERE u.estado_cuenta = 'ACTIVO'
 ORDER BY p.precio_mensual DESC, meses_antiguedad DESC;
