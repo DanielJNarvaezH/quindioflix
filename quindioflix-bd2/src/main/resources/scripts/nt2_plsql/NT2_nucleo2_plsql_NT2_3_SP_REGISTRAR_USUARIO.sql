@@ -147,7 +147,7 @@ VALUES ('Principal', 'ADULTO', v_id_nuevo);
 
 -- =========================================================================
 -- PASO 5: Registrar el primer pago por el monto del plan elegido
--- El pago se registra como APROBADO para activar la cuenta de inmediato
+-- El pago se registra como EXITOSO para activar TRG_ACTIVAR_CUENTA de inmediato
 -- =========================================================================
 INSERT INTO PAGOS (
     fecha_pago, monto, metodo_pago,
