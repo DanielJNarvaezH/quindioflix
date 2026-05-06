@@ -1,42 +1,41 @@
 -- =============================================================================
--- NT3-2: Transaccion de renovacion mensual
--- Autor  : Diego Garcia
--- Tarea  : NT3-2 del cronograma QuindioFlix — Sprint 4
---
--- DESCRIPCION:
+-- NT3-2: Transaccion de renovacion mensual — QuindioFlix
+-- Archivo : NT3_nucleo3_transacciones_NT3_2_SP_RENOVACION_MENSUAL.sql
+-- Autor   : Diego Garcia
+-- Sprint  : 4 — S14 (11/05–17/05/2026)
+-- =============================================================================
+-- Logica:
 --   Procesa la renovacion mensual de todos los usuarios activos cuya
---   fecha_vencimiento sea menor o igual a SYSDATE (suscripcion vencida
---   o por vencer hoy).
---
---   Por cada usuario elegible:
+--   fecha_vencimiento sea menor o igual a SYSDATE. Por cada usuario:
 --     1. Establece un SAVEPOINT individual
---     2. Calcula el monto con FN_CALCULAR_MONTO (incluye descuento antiguedad)
+--     2. Calcula el monto con FN_CALCULAR_MONTO (descuento por antiguedad)
 --     3. Registra el pago en PAGOS con estado EXITOSO
 --     4. Actualiza fecha_vencimiento = fecha_vencimiento + 30
---     5. Confirma con RELEASE SAVEPOINT
---     Si falla cualquier paso del usuario -> ROLLBACK TO SAVEPOINT
---     (los usuarios ya procesados no se pierden)
---
+--   Si falla cualquier paso del usuario -> ROLLBACK TO SAVEPOINT
+--   (los usuarios ya procesados no se pierden).
 --   Al final: COMMIT global de todos los usuarios exitosos.
 --
--- ESTADOS DOCUMENTADOS (requeridos por NT3-1):
---   ACTIVA           : inicio del bloque, antes del primer usuario
---   PARCIALMENTE     : despues de cada SAVEPOINT liberado
+-- SAVEPOINT por usuario:
+--   Permite que si el usuario N falla, los usuarios 1..N-1 ya procesados
+--   no se reviertan. Sin SAVEPOINT cualquier fallo reverteria todo.
+--
+-- Estados documentados:
+--   ACTIVA           : inicio del SP, antes del primer usuario
+--   PARCIALMENTE     : despues de cada usuario procesado con exito
 --   CONFIRMADA       : tras el COMMIT global
 --   FALLIDA/ABORTADA : si el bloque completo falla (ROLLBACK total)
 --
--- SAVEPOINT por usuario:
---   Permite que si el usuario 15 falla, los usuarios 1-14 ya procesados
---   no se reviertan. Solo se pierde el usuario que fallo.
---   Sin SAVEPOINT, cualquier fallo reverteria toda la renovacion.
+-- Dependencia: FN_CALCULAR_MONTO (NT2-6, Cristhian Osorio)
 --
--- DEPENDENCIA: FN_CALCULAR_MONTO (NT2-6, Cristhian Osorio)
+-- Codigos de error propios:
+--   -20031  SIN_USUARIOS_ELEGIBLES — ningún usuario activo vencido
+--   -20099  Error inesperado (catch-all)
 -- =============================================================================
 
-DECLARE
--- Cursor de usuarios elegibles para renovacion
--- Criterio: ACTIVO + fecha_vencimiento <= SYSDATE (vencidos o que vencen hoy)
-CURSOR cur_usuarios_renovar IS
+CREATE OR REPLACE PROCEDURE SP_RENOVACION_MENSUAL
+IS
+    -- Cursor de usuarios elegibles para renovacion
+    CURSOR cur_usuarios_renovar IS
 SELECT
     u.id_usuario,
     u.nombre || ' ' || u.apellido   AS nombre_completo,
@@ -45,24 +44,38 @@ SELECT
     pl.nombre                        AS nombre_plan
 FROM USUARIOS u
          JOIN PLANES pl ON pl.id_plan = u.id_plan
-WHERE u.estado_cuenta  = 'ACTIVO'
+WHERE u.estado_cuenta   = 'ACTIVO'
   AND u.fecha_vencimiento <= SYSDATE
 ORDER BY u.id_usuario;
 
 -- Variables de trabajo
 v_monto             NUMBER(10,2);
-    v_sp_nombre         VARCHAR2(30);
     v_renovados         NUMBER := 0;
     v_fallidos          NUMBER := 0;
     v_total_cobrado     NUMBER := 0;
+    v_elegibles         NUMBER := 0;
 
 BEGIN
     DBMS_OUTPUT.PUT_LINE('');
     DBMS_OUTPUT.PUT_LINE('=======================================================');
-    DBMS_OUTPUT.PUT_LINE('   RENOVACION MENSUAL — QUINDIOFLIX');
+    DBMS_OUTPUT.PUT_LINE('   SP_RENOVACION_MENSUAL — QUINDIOFLIX');
     DBMS_OUTPUT.PUT_LINE('   Fecha: ' || TO_CHAR(SYSDATE, 'DD/MM/YYYY HH24:MI:SS'));
     DBMS_OUTPUT.PUT_LINE('=======================================================');
     DBMS_OUTPUT.PUT_LINE('ESTADO: ACTIVA — iniciando procesamiento');
+    DBMS_OUTPUT.PUT_LINE('');
+
+    -- Verificar si hay usuarios elegibles
+SELECT COUNT(*) INTO v_elegibles
+FROM USUARIOS
+WHERE estado_cuenta    = 'ACTIVO'
+  AND fecha_vencimiento <= SYSDATE;
+
+IF v_elegibles = 0 THEN
+        DBMS_OUTPUT.PUT_LINE('ESTADO: CONFIRMADA — sin usuarios elegibles para renovar.');
+        RETURN;
+END IF;
+
+    DBMS_OUTPUT.PUT_LINE('Usuarios elegibles: ' || v_elegibles);
     DBMS_OUTPUT.PUT_LINE('');
 
     -- =========================================================================
@@ -70,12 +83,10 @@ BEGIN
     -- =========================================================================
 FOR v_usr IN cur_usuarios_renovar LOOP
 
-        -- Nombre del savepoint unico por usuario
-        v_sp_nombre := 'SP_USR_' || v_usr.id_usuario;
-
 BEGIN
             -- -----------------------------------------------------------------
             -- SAVEPOINT: marca de retroceso individual para este usuario
+            -- Si este usuario falla, solo se revierte el hasta aqui
             -- -----------------------------------------------------------------
 SAVEPOINT SP_RENOVACION;
 
@@ -97,7 +108,6 @@ VALUES (
            v_monto,
            'TARJETA_CREDITO',
            'EXITOSO',
-           -- Calcular porcentaje de descuento aplicado para el registro
            ROUND((1 - v_monto / (
                SELECT precio_mensual FROM PLANES
                WHERE id_plan = v_usr.id_plan
@@ -156,6 +166,7 @@ END LOOP;
     -- COMMIT global: confirma todos los usuarios exitosamente renovados
     -- =========================================================================
 COMMIT;
+
 DBMS_OUTPUT.PUT_LINE('');
     DBMS_OUTPUT.PUT_LINE('=======================================================');
     DBMS_OUTPUT.PUT_LINE('ESTADO: CONFIRMADA — COMMIT ejecutado');
@@ -168,33 +179,37 @@ DBMS_OUTPUT.PUT_LINE('');
 EXCEPTION
     -- =========================================================================
     -- Error catastrofico que impide procesar cualquier usuario
-    -- Revertir todo lo que no se habia confirmado con SAVEPOINT
     -- =========================================================================
     WHEN OTHERS THEN
         ROLLBACK;
         DBMS_OUTPUT.PUT_LINE('');
         DBMS_OUTPUT.PUT_LINE('ESTADO: ABORTADA — error catastrofico: ' || SQLERRM);
         DBMS_OUTPUT.PUT_LINE('Se ejecuto ROLLBACK total.');
-        RAISE;
+        RAISE_APPLICATION_ERROR(-20099,
+            'SP_RENOVACION_MENSUAL — Error inesperado: ' || SQLERRM);
+END SP_RENOVACION_MENSUAL;
+/
+
+-- =============================================================================
+-- PRUEBAS DE SP_RENOVACION_MENSUAL
+-- =============================================================================
+
+SET SERVEROUTPUT ON SIZE UNLIMITED;
+
+PROMPT
+PROMPT ============================================================
+PROMPT NT3-2 PRUEBA 1: Ejecucion normal — usuarios vencidos
+PROMPT ============================================================
+BEGIN
+    SP_RENOVACION_MENSUAL;
 END;
 /
 
-
--- =============================================================================
--- Verificacion post-ejecucion
--- =============================================================================
-
--- Usuarios cuya fecha_vencimiento se actualizo hoy
-SELECT
-    u.id_usuario,
-    u.nombre || ' ' || u.apellido           AS usuario,
-    u.fecha_vencimiento                      AS nueva_fecha_vencimiento,
-    u.estado_cuenta
-FROM USUARIOS u
-WHERE TRUNC(u.fecha_vencimiento) = TRUNC(SYSDATE) + 30
-ORDER BY u.id_usuario;
-
--- Pagos registrados hoy por la renovacion
+-- Verificar pagos registrados hoy
+PROMPT
+PROMPT ============================================================
+PROMPT NT3-2 PRUEBA 2: Verificacion — pagos registrados hoy
+PROMPT ============================================================
 SELECT
     p.id_pago,
     u.nombre || ' ' || u.apellido           AS usuario,
@@ -209,3 +224,13 @@ FROM PAGOS p
 WHERE TRUNC(p.fecha_pago) = TRUNC(SYSDATE)
   AND p.estado_pago = 'EXITOSO'
 ORDER BY p.id_pago;
+
+PROMPT
+PROMPT ============================================================
+PROMPT NT3-2 PRUEBA 3: Segunda ejecucion — no debe renovar nadie
+PROMPT (fecha_vencimiento ya fue actualizada a SYSDATE+30)
+PROMPT ============================================================
+BEGIN
+    SP_RENOVACION_MENSUAL;
+END;
+/
