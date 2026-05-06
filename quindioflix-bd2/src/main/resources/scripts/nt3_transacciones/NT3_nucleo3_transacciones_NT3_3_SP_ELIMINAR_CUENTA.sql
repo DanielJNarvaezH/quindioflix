@@ -50,81 +50,81 @@ BEGIN
     -- PASO 1: Verificar existencia del usuario
     -- Lanza NO_DATA_FOUND si no existe; lo capturamos abajo como USUARIO_NO_EXISTE
     -- =========================================================================
-    SELECT * INTO v_usuario
-    FROM   USUARIOS
-    WHERE  id_usuario = p_id_usuario;
+SELECT * INTO v_usuario
+FROM   USUARIOS
+WHERE  id_usuario = p_id_usuario;
 
-    -- =========================================================================
-    -- PASO 2: Liberar FK opcionales antes de borrar la raiz
-    -- =========================================================================
+-- =========================================================================
+-- PASO 2: Liberar FK opcionales antes de borrar la raiz
+-- =========================================================================
 
-    -- 2a. Reportes que este usuario moderaba — desasignar moderador
-    UPDATE REPORTES_INAPROPIADO
-    SET    id_moderador = NULL
-    WHERE  id_moderador = p_id_usuario;
-    v_filas_rep_mod := SQL%ROWCOUNT;
+-- 2a. Reportes que este usuario moderaba — desasignar moderador
+UPDATE REPORTES_INAPROPIADO
+SET    id_moderador = NULL
+WHERE  id_moderador = p_id_usuario;
+v_filas_rep_mod := SQL%ROWCOUNT;
 
     -- 2b. Usuarios que este usuario refirió — cortar FK reflexiva
-    UPDATE USUARIOS
-    SET    id_referidor = NULL
-    WHERE  id_referidor = p_id_usuario;
+UPDATE USUARIOS
+SET    id_referidor = NULL
+WHERE  id_referidor = p_id_usuario;
 
-    -- =========================================================================
-    -- PASO 3: Eliminar datos de perfiles (nivel mas profundo del arbol)
-    -- =========================================================================
+-- =========================================================================
+-- PASO 3: Eliminar datos de perfiles (nivel mas profundo del arbol)
+-- =========================================================================
 
-    -- 3a. Calificaciones emitidas por los perfiles del usuario
-    DELETE FROM CALIFICACIONES
-    WHERE  id_perfil IN (
-        SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
-    );
-    v_filas_calif := SQL%ROWCOUNT;
+-- 3a. Calificaciones emitidas por los perfiles del usuario
+DELETE FROM CALIFICACIONES
+WHERE  id_perfil IN (
+    SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
+);
+v_filas_calif := SQL%ROWCOUNT;
 
     -- 3b. Favoritos de los perfiles del usuario
-    DELETE FROM FAVORITOS
-    WHERE  id_perfil IN (
-        SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
-    );
-    v_filas_fav := SQL%ROWCOUNT;
+DELETE FROM FAVORITOS
+WHERE  id_perfil IN (
+    SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
+);
+v_filas_fav := SQL%ROWCOUNT;
 
     -- 3c. Reportes de contenido inapropiado hechos por los perfiles del usuario
-    DELETE FROM REPORTES_INAPROPIADO
-    WHERE  id_perfil_reporta IN (
-        SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
-    );
-    v_filas_rep_perf := SQL%ROWCOUNT;
+DELETE FROM REPORTES_INAPROPIADO
+WHERE  id_perfil_reporta IN (
+    SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
+);
+v_filas_rep_perf := SQL%ROWCOUNT;
 
     -- 3d. Reproducciones (tabla particionada RANGE por fecha_hora_inicio)
     --     Oracle aplica partition pruning automaticamente por id_perfil
-    DELETE FROM REPRODUCCIONES
-    WHERE  id_perfil IN (
-        SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
-    );
-    v_filas_reprod := SQL%ROWCOUNT;
+DELETE FROM REPRODUCCIONES
+WHERE  id_perfil IN (
+    SELECT id_perfil FROM PERFILES WHERE id_usuario = p_id_usuario
+);
+v_filas_reprod := SQL%ROWCOUNT;
 
     -- =========================================================================
     -- PASO 4: Eliminar perfiles (FK directa hacia USUARIOS)
     -- =========================================================================
-    DELETE FROM PERFILES WHERE id_usuario = p_id_usuario;
-    v_filas_perfiles := SQL%ROWCOUNT;
+DELETE FROM PERFILES WHERE id_usuario = p_id_usuario;
+v_filas_perfiles := SQL%ROWCOUNT;
 
     -- =========================================================================
     -- PASO 5: Eliminar pagos (FK directa hacia USUARIOS)
     -- =========================================================================
-    DELETE FROM PAGOS WHERE id_usuario = p_id_usuario;
-    v_filas_pagos := SQL%ROWCOUNT;
+DELETE FROM PAGOS WHERE id_usuario = p_id_usuario;
+v_filas_pagos := SQL%ROWCOUNT;
 
     -- =========================================================================
     -- PASO 6: Eliminar usuario raiz
     -- =========================================================================
-    DELETE FROM USUARIOS WHERE id_usuario = p_id_usuario;
+DELETE FROM USUARIOS WHERE id_usuario = p_id_usuario;
 
-    -- =========================================================================
-    -- PASO 7: Confirmar la transaccion completa
-    -- =========================================================================
-    COMMIT;
+-- =========================================================================
+-- PASO 7: Confirmar la transaccion completa
+-- =========================================================================
+COMMIT;
 
-    DBMS_OUTPUT.PUT_LINE('');
+DBMS_OUTPUT.PUT_LINE('');
     DBMS_OUTPUT.PUT_LINE('==============================================');
     DBMS_OUTPUT.PUT_LINE('  SP_ELIMINAR_CUENTA — Cuenta eliminada');
     DBMS_OUTPUT.PUT_LINE('==============================================');
@@ -146,7 +146,7 @@ EXCEPTION
         ROLLBACK;
         RAISE_APPLICATION_ERROR(-20041,
             'SP_ELIMINAR_CUENTA: Usuario ' || p_id_usuario || ' no existe.');
-    WHEN OTHERS THEN
+WHEN OTHERS THEN
         ROLLBACK;
         RAISE_APPLICATION_ERROR(-20099,
             'SP_ELIMINAR_CUENTA — Error: ' || SQLERRM);
@@ -155,28 +155,94 @@ END SP_ELIMINAR_CUENTA;
 
 -- =============================================================================
 -- PRUEBAS DE SP_ELIMINAR_CUENTA
+-- Nota: las pruebas usan un usuario temporal creado aqui mismo para no
+-- eliminar datos reales de la BD. La BD queda en el mismo estado que antes
+-- de ejecutar el script.
 -- =============================================================================
+
+SET SERVEROUTPUT ON SIZE UNLIMITED;
 
 PROMPT
 PROMPT ============================================================
-PROMPT NT3-3 PRUEBA 1: Eliminacion exitosa — usuario existente
+PROMPT NT3-3 PRUEBA 1: Eliminacion exitosa — usuario temporal
+PROMPT Crea un usuario de prueba completo (con perfil, pago,
+PROMPT reproduccion, calificacion y favorito) y lo elimina.
+PROMPT La BD queda en estado original al terminar.
 PROMPT ============================================================
--- sebastian.roa esta vencido desde 2025 (moroso) y no tiene referencias
--- criticas para los scripts de otros integrantes del equipo.
 DECLARE
-    v_id NUMBER;
+v_id_temp    NUMBER;
+    v_id_perfil  NUMBER;
+    v_id_cont    NUMBER;
+    v_usu_pre    NUMBER;
+    v_usu_post   NUMBER;
 BEGIN
-    SELECT id_usuario INTO v_id
-    FROM   USUARIOS
-    WHERE  email = 'sebastian.roa@quindioflix.com';
+    -- Conteo antes de la prueba
+SELECT COUNT(*) INTO v_usu_pre FROM USUARIOS;
+DBMS_OUTPUT.PUT_LINE('Usuarios antes de la prueba: ' || v_usu_pre);
 
-    DBMS_OUTPUT.PUT_LINE('Eliminando usuario id=' || v_id);
-    SP_ELIMINAR_CUENTA(v_id);
+    -- Obtener un id_contenido existente para las FK de repro/calif/fav
+SELECT id_contenido INTO v_id_cont FROM CONTENIDO WHERE ROWNUM = 1;
+
+-- PASO A: Crear usuario temporal via SP_REGISTRAR_USUARIO
+-- Esto crea usuario + perfil Principal + pago EXITOSO de forma atomica
+SP_REGISTRAR_USUARIO(
+        p_nombre          => 'Usuario',
+        p_apellido        => 'Temporal NT3',
+        p_email           => 'temporal.nt3@quindioflix.com',
+        p_contrasena_hash => 'hash_temp_nt3',
+        p_ciudad          => 'Armenia',
+        p_id_plan         => 1,
+        p_metodo_pago     => 'PSE',
+        p_id_referidor    => NULL,
+        p_id_usuario      => v_id_temp
+    );
+    DBMS_OUTPUT.PUT_LINE('Usuario temporal creado: id=' || v_id_temp);
+
+    -- Obtener el perfil creado por el SP
+SELECT id_perfil INTO v_id_perfil
+FROM   PERFILES WHERE id_usuario = v_id_temp AND ROWNUM = 1;
+
+-- PASO B: Agregar datos derivados para probar la cascada de borrado completa
+-- Reproduccion
+INSERT INTO REPRODUCCIONES (
+    fecha_hora_inicio, fecha_hora_fin, dispositivo,
+    porcentaje_avance, id_perfil, id_contenido, id_episodio
+) VALUES (
+             TIMESTAMP '2026-05-01 20:00:00',
+             TIMESTAMP '2026-05-01 21:00:00',
+             'TV', 100, v_id_perfil, v_id_cont, NULL
+         );
+COMMIT;
+
+-- Calificacion (avance = 100% pasa el TRG_VALID_CALIFICACION)
+INSERT INTO CALIFICACIONES (estrellas, resena, id_perfil, id_contenido)
+VALUES (5, 'Prueba NT3-3', v_id_perfil, v_id_cont);
+COMMIT;
+
+-- Favorito
+INSERT INTO FAVORITOS (fecha_agregado, id_perfil, id_contenido)
+VALUES (SYSDATE, v_id_perfil, v_id_cont);
+COMMIT;
+
+DBMS_OUTPUT.PUT_LINE('Datos derivados creados (repro + calif + fav).');
+
+    -- PASO C: Ejecutar SP_ELIMINAR_CUENTA — debe borrar todo en cascada
+    SP_ELIMINAR_CUENTA(v_id_temp);
+
+    -- PASO D: Verificar que no quedo nada
+SELECT COUNT(*) INTO v_usu_post FROM USUARIOS;
+DBMS_OUTPUT.PUT_LINE('Usuarios despues de la prueba: ' || v_usu_post);
+
+    IF v_usu_post = v_usu_pre THEN
+        DBMS_OUTPUT.PUT_LINE('PRUEBA 1 OK: usuario eliminado, BD en estado original.');
+ELSE
+        DBMS_OUTPUT.PUT_LINE('PRUEBA 1 FALLO: conteo no coincide.');
+END IF;
+
 EXCEPTION
-    WHEN NO_DATA_FOUND THEN
-        DBMS_OUTPUT.PUT_LINE('AVISO: usuario de prueba ya no existe en la BD.');
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('ERROR inesperado: ' || SQLERRM);
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('ERROR en prueba 1: ' || SQLERRM);
 END;
 /
 
@@ -188,32 +254,53 @@ BEGIN
     SP_ELIMINAR_CUENTA(99999);
 EXCEPTION
     WHEN OTHERS THEN
-        DBMS_OUTPUT.PUT_LINE('Excepcion esperada (-20041): ' || SQLERRM);
+        DBMS_OUTPUT.PUT_LINE('P2 OK — Excepcion esperada (-20041): ' || SQLERRM);
 END;
 /
 
 PROMPT
 PROMPT ============================================================
-PROMPT NT3-3 PRUEBA 3: Verificar que el usuario fue eliminado
+PROMPT NT3-3 PRUEBA 3: Usuario con id_referidor hacia el — cascada FK reflexiva
+PROMPT Crea dos usuarios temporales donde uno refirio al otro,
+PROMPT elimina el referidor y verifica que el referido queda con
+PROMPT id_referidor = NULL (no se elimina el referido).
 PROMPT ============================================================
 DECLARE
-    v_usu NUMBER;
-    v_per NUMBER;
-    v_pag NUMBER;
+v_id_ref  NUMBER;  -- el que va a ser eliminado (referidor)
+    v_id_ref2 NUMBER;  -- el referido (debe quedar intacto)
+    v_referidor_post NUMBER;
 BEGIN
-    SELECT COUNT(*) INTO v_usu FROM USUARIOS
-    WHERE  email = 'sebastian.roa@quindioflix.com';
+    -- Crear referidor
+    SP_REGISTRAR_USUARIO('Referidor','Temporal','referidor.nt3@quindioflix.com',
+        'hash_ref','Pereira',1,'PSE',NULL,v_id_ref);
 
-    SELECT COUNT(*) INTO v_per FROM PERFILES p
-    JOIN   USUARIOS u ON u.id_usuario = p.id_usuario
-    WHERE  u.email = 'sebastian.roa@quindioflix.com';
+    -- Crear referido apuntando al referidor
+    SP_REGISTRAR_USUARIO('Referido','Temporal','referido.nt3@quindioflix.com',
+        'hash_ref2','Pereira',1,'PSE',v_id_ref,v_id_ref2);
 
-    SELECT COUNT(*) INTO v_pag FROM PAGOS pg
-    JOIN   USUARIOS u ON u.id_usuario = pg.id_usuario
-    WHERE  u.email = 'sebastian.roa@quindioflix.com';
+    DBMS_OUTPUT.PUT_LINE('Referidor id=' || v_id_ref || ' | Referido id=' || v_id_ref2);
 
-    DBMS_OUTPUT.PUT_LINE('USUARIOS restantes : ' || v_usu || ' (esperado: 0)');
-    DBMS_OUTPUT.PUT_LINE('PERFILES restantes : ' || v_per || ' (esperado: 0)');
-    DBMS_OUTPUT.PUT_LINE('PAGOS   restantes  : ' || v_pag || ' (esperado: 0)');
+    -- Eliminar el referidor
+    SP_ELIMINAR_CUENTA(v_id_ref);
+
+    -- Verificar que el referido sigue existiendo con id_referidor = NULL
+SELECT NVL(id_referidor, -1)
+INTO   v_referidor_post
+FROM   USUARIOS WHERE id_usuario = v_id_ref2;
+
+IF v_referidor_post = -1 THEN
+        DBMS_OUTPUT.PUT_LINE('P3 OK: referido existe y su id_referidor quedo NULL.');
+ELSE
+        DBMS_OUTPUT.PUT_LINE('P3 FALLO: id_referidor = ' || v_referidor_post);
+END IF;
+
+    -- Limpiar el referido
+    SP_ELIMINAR_CUENTA(v_id_ref2);
+    DBMS_OUTPUT.PUT_LINE('Usuarios temporales limpiados. BD en estado original.');
+
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('ERROR en prueba 3: ' || SQLERRM);
 END;
 /
